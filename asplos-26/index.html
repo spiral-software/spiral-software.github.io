@@ -1,10 +1,406 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>ASPLOS 2026</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial on SPIRAL: Pre-Silicon and Early-Prototype Performance Estimation</title>
+    <style>
+        /* CSS Variables for easy theming */
+        :root {
+            --primary-color: #c41230; /* CMU Red */
+            --text-color: #333;
+            --bg-color: #fff;
+            --link-color: #0066cc;
+            --section-bg: #f9f9f9;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+        }
+
+        /* Container to center content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header Styling */
+        header {
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #555;
+            font-weight: 300;
+            margin-top: 0.5rem;
+            line-height: 1.3;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            color: #444;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Logistics Section (When/Where) */
+        .logistics {
+            background-color: var(--section-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .logistics p {
+            margin: 0.5rem 0;
+            font-weight: 500;
+        }
+
+        /* List Styling */
+        ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Schedule Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.8rem;
+            border-bottom: 1px solid #eaeaea;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        /* Adjusted Organizer Layout for Bios */
+        .organizers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .organizer-card {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .organizer-card:last-child {
+            border-bottom: none;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            
+            /* Flexbox for centering initials */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+            /* Typography for initials */
+            font-size: 2rem; 
+            font-weight: 500; 
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            
+            /* Flat Professional Lighter Gray */
+            background-color: #9ca3af;
+            
+            /* No Border or Shadow for 2D look */
+            border: none;
+            box-shadow: none;
+        }
+        
+        /* Wrapper for text info to handle flex growth */
+        .organizer-info {
+            flex-grow: 1;
+        }
+
+        .organizer-info h3 {
+            margin-top: 0;
+            margin-bottom: 0.4rem;
+            font-size: 1.4rem;
+            line-height: 1.2;
+        }
+
+        /* Professional "Pill" Tags */
+        .role-tags {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+            align-items: center;
+        }
+
+        .role-tag {
+            font-size: 0.65rem;
+            padding: 0.3em 0.8em;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            /* Flex center to ensure text aligns perfectly */
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Modern "Soft Tint" Styles */
+        .tag-organizer {
+            background-color: #eff6ff; /* Soft Blue Background */
+            color: #1e40af;            /* Deep Blue Text */
+            border: 1px solid #bfdbfe; /* Subtle Blue Border */
+        }
+
+        .tag-speaker {
+            background-color: #faf5ff; /* Soft Purple Background */
+            color: #6b21a8;            /* Deep Purple Text */
+            border: 1px solid #e9d5ff; /* Subtle Purple Border */
+        }
+
+        .organizer-affil {
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 0.8rem;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .organizer-bio {
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eaeaea;
+            font-size: 0.9rem;
+            color: #777;
+            text-align: center;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .container { padding: 1rem; }
+            th, td { padding: 0.5rem; font-size: 0.9rem; }
+            .organizer-card { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Coming soon</h1>
+
+<div class="container">
+    <header>
+        <h1>SPIRAL Tutorial @ ASPLOS '26</h1>
+        <div class="subtitle">Pre-Silicon and Early-Prototype Performance Estimation Using Highly Optimized Code</div>
+    </header>
+
+    <section id="overview">
+        <h2>Overview</h2>
+        <p>Emerging applications, from AI and cryptography to scientific computing, are driving a rapid proliferation of new architectures, ranging from lightweight CPU ISA extensions to fully customized accelerators. However, evaluating a new ISA or accelerator remains notoriously difficult, time-consuming, and costly: evaluators must hand-optimize application kernels for hardware whose architecture and toolchain are still evolving, often in the absence of a mature compiler, operating system, or performance analysis framework.</p>
+        
+        <p>This tutorial introduces a systematic methodology for pre-silicon and early-prototype performance estimation that enables informed stop-or-go decisions long before complete hardware or software stacks exist. We begin with <a href="https://www.spiral.net/" target="_blank">SPIRAL</a>, a code generation system developed over 25 years through academic, industrial, and government collaborations, which automatically produces highly optimized code for emerging architectures.</p>
+            
+        <p>We then demonstrate how to enable hardware-software co-design at the earliest stage by defining a fixed C-level function API as a stable interface between the two. Once this API is defined, SPIRAL can automatically target it and generate optimized, non-trivial kernels for benchmarking and performance evaluation. To close the loop, we introduce performance projection with proxy ISA (PISA), a fast and accurate performance estimation technique that predicts runtime performance without requiring an implemented microarchitectural model. By the end of the tutorial, attendees will understand how to use SPIRAL for early-stage performance evaluation and hands-on kernel generation for novel hardware prototypes.</p> 
+    </section>
+
+    <div class="logistics">
+        <p><strong>📅 When:</strong> March 23, 2026 </p>
+        <p><strong>📍 Where:</strong> TBD, co-located with ASPLOS '26</p>
+    </div>
+
+    <section id="schedule">
+        <h2>Tentative Schedule</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%">Duration</th>
+                    <th style="width: 60%">Topic</th>
+                    <th style="width: 25%">Resources</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>10 mins</td>
+                    <td>Opening Remarks</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>40 mins</td>
+                    <td>Session 1: Introduction to SPIRAL and Code Generation</td>
+                    <td>
+                        <a href="#">Slides</a><br>
+                        <a href="https://www.spiral.net/doc/papers/08510983_Spiral_IEEE_Final.pdf" target="_blank">Proc. IEEE '18</a><br>
+                        <a href="https://www.spiral.net/doc/papers/IEEE_2005.pdf" target="_blank">Proc. IEEE '05</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>40 mins</td>
+                    <td>Session 2: Targeting New Architectures with Optimized Code</td>
+                    <td>
+                        <a href="#">Slides</a><br>
+                        <a href="https://naifeng.github.io/assets/pdf/CGO_2025_MoMA.pdf" target="_blank">CGO '25</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>30 mins</td>
+                    <td>Coffee Break ☕</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>40 mins</td>
+                    <td>Session 3: Pre-Silicon Performance Modeling and Evaluation</td>
+                    <td>
+                        <a href="#">Slides</a><br>
+                        <a href="https://naifeng.github.io/assets/pdf/MICRO_2025_MQX.pdf" target="_blank">MICRO '25</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>20 mins</td>
+                    <td>Invited Talk from Speaker I</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>20 mins</td>
+                    <td>Invited Talk from Speaker II</td>
+                    <td></td>
+                </tr>
+                 <tr>
+                    <td>10 mins</td>
+                    <td>Closing Remarks</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section id="organizers">
+        <h2>Organizers & Speakers</h2>
+        <div class="organizers-list">
+            <div class="organizer-card">
+                <div class="avatar">FF</div>
+                <div class="organizer-info">
+                    <h3><a href="https://users.ece.cmu.edu/~franzf/" target="_blank">Franz Franchetti</a></h3>
+                    <div class="role-tags">
+                        <span class="role-tag tag-organizer">Organizer</span>
+                        <span class="role-tag tag-speaker">Speaker</span>
+                    </div>
+                    <span class="organizer-affil">Carnegie Mellon University</span>
+                    <div class="organizer-bio">
+                        Franz Franchetti is the Kavčić-Moura Professor of Electrical and Computer Engineering, Associate Dean for Research in the College of Engineering, and Director of the Engineering Research Accelerator at Carnegie Mellon University. He received his Dipl.-Ing. (M.Sc.) in Technical Mathematics and Dr. techn. (Ph.D.) in Computational Mathematics from the Vienna University of Technology in 2000 and 2003, respectively. Prof. Franchetti's research focuses on automatic performance tuning and program generation for emerging parallel platforms and algorithm/hardware co-synthesis. Within the SPIRAL effort, his research goal is to enable automatic generation of highly optimized software libraries for important kernel functionality.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="organizer-card">
+                <div class="avatar">NZ</div>
+                <div class="organizer-info">
+                    <h3><a href="https://naifeng.github.io/" target="_blank">Naifeng Zhang</a></h3>
+                    <div class="role-tags">
+                        <span class="role-tag tag-organizer">Organizer</span>
+                        <span class="role-tag tag-speaker">Speaker</span>
+                    </div>
+                    <span class="organizer-affil">Carnegie Mellon University</span>
+                    <div class="organizer-bio">
+                        Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on high-performance code generation, programming languages, compilers, and algorithms. His work has earned multiple awards at conferences such as CGO and PACT.
+                    </div>
+                </div>
+            </div>
+
+            <div class="organizer-card">
+                <div class="avatar">S1</div>
+                <div class="organizer-info">
+                    <h3>Invited Speaker I</h3>
+                    <div class="role-tags">
+                        <span class="role-tag tag-speaker">Speaker</span>
+                    </div>
+                    <span class="organizer-affil">Affiliation</span>
+                    <div class="organizer-bio">
+                        To be announced.
+                    </div>
+                </div>
+            </div>
+
+            <div class="organizer-card">
+                <div class="avatar">S2</div>
+                <div class="organizer-info">
+                    <h3>Invited Speaker II</h3>
+                    <div class="role-tags">
+                        <span class="role-tag tag-speaker">Speaker</span>
+                    </div>
+                    <span class="organizer-affil">Affiliation</span>
+                    <div class="organizer-bio">
+                        To be announced.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>SPIRAL Tutorial @ ASPLOS '26.</p>
+    </footer>
+</div>
+
 </body>
 </html>
