@@ -147,19 +147,16 @@
             border-radius: 50%;
             flex-shrink: 0;
             
-            /* Flexbox for centering initials */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /* Ensures images don't stretch */
+            object-fit: cover; 
             
-            /* Typography for initials */
+            /* Typography for fallback/initials if needed */
             font-size: 2rem; 
             font-weight: 500; 
             color: white;
             text-transform: uppercase;
-            letter-spacing: 1px;
             
-            /* Flat Professional Lighter Gray */
+            /* Flat Professional Lighter Gray background (visible if image fails) */
             background-color: #9ca3af;
             
             /* No Border or Shadow for 2D look */
@@ -251,7 +248,7 @@
 
 <div class="container">
     <header>
-        <h1>SPIRAL Tutorial @ ASPLOS '26</h1>
+        <h1>SPIRAL Tutorial @ <a href="https://www.asplos-conference.org/asplos2026/" target="_blank">ASPLOS '26</a></h1>
         <div class="subtitle">Pre-Silicon and Early-Prototype Performance Estimation Using Highly Optimized Code</div>
     </header>
 
@@ -265,8 +262,8 @@
     </section>
 
     <div class="logistics">
-        <p><strong>📅 When:</strong> March 23, 2026 </p>
-        <p><strong>📍 Where:</strong> TBD, co-located with ASPLOS '26</p>
+        <p><strong>📅 When:</strong> March 23, 2026, Morning Session </p>
+        <p><strong>📍 Where:</strong> <a href="https://www.asplos-conference.org/asplos2026/conference-venue/" target="_blank">The Landing Hotel</a>, Room TBD</p>
     </div>
 
     <section id="schedule">
@@ -289,7 +286,6 @@
                     <td>40 mins</td>
                     <td>Session 1: Introduction to SPIRAL and Code Generation</td>
                     <td>
-                        <a href="#">Slides</a><br>
                         <a href="https://www.spiral.net/doc/papers/08510983_Spiral_IEEE_Final.pdf" target="_blank">Proc. IEEE '18</a><br>
                         <a href="https://www.spiral.net/doc/papers/IEEE_2005.pdf" target="_blank">Proc. IEEE '05</a>
                     </td>
@@ -298,7 +294,7 @@
                     <td>40 mins</td>
                     <td>Session 2: Targeting New Architectures with Optimized Code</td>
                     <td>
-                        <a href="#">Slides</a><br>
+                        <!-- <a href="#">Slides</a><br> -->
                         <a href="https://naifeng.github.io/assets/pdf/CGO_2025_MoMA.pdf" target="_blank">CGO '25</a>
                     </td>
                 </tr>
@@ -311,18 +307,18 @@
                     <td>40 mins</td>
                     <td>Session 3: Pre-Silicon Performance Modeling and Evaluation</td>
                     <td>
-                        <a href="#">Slides</a><br>
+                        <!-- <a href="#">Slides</a><br> -->
                         <a href="https://naifeng.github.io/assets/pdf/MICRO_2025_MQX.pdf" target="_blank">MICRO '25</a>
                     </td>
                 </tr>
                 <tr>
                     <td>20 mins</td>
-                    <td>Invited Talk from Speaker I</td>
+                    <td>Invited Talk I</td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>20 mins</td>
-                    <td>Invited Talk from Speaker II</td>
+                    <td>Invited Talk II</td>
                     <td></td>
                 </tr>
                  <tr>
@@ -335,39 +331,40 @@
     </section>
 
     <section id="organizers">
-        <h2>Organizers & Speakers</h2>
+        <h2>Organizers</h2>
         <div class="organizers-list">
+            
             <div class="organizer-card">
-                <div class="avatar">FF</div>
+                <img src="images/naifeng.jpg" alt="Naifeng Zhang" class="avatar">
                 <div class="organizer-info">
-                    <h3><a href="https://users.ece.cmu.edu/~franzf/" target="_blank">Franz Franchetti</a></h3>
-                    <div class="role-tags">
+                    <h3><a href="https://naifeng.github.io/" target="_blank">Naifeng Zhang</a></h3>
+                    <!-- <div class="role-tags">
                         <span class="role-tag tag-organizer">Organizer</span>
                         <span class="role-tag tag-speaker">Speaker</span>
+                    </div> -->
+                    <span class="organizer-affil">Carnegie Mellon University</span>
+                    <div class="organizer-bio">
+                        Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on code generation, compilers, and programming languages. His work has earned awards at conferences such as CGO and PACT.
                     </div>
+                </div>
+            </div>
+
+            <div class="organizer-card">
+                <img src="images/franz.png" alt="Franz Franchetti" class="avatar">
+                <div class="organizer-info">
+                    <h3><a href="https://users.ece.cmu.edu/~franzf/" target="_blank">Franz Franchetti</a></h3>
+                    <!-- <div class="role-tags">
+                        <span class="role-tag tag-organizer">Organizer</span>
+                        <span class="role-tag tag-speaker">Speaker</span>
+                    </div> -->
                     <span class="organizer-affil">Carnegie Mellon University</span>
                     <div class="organizer-bio">
                         Franz Franchetti is the Kavčić-Moura Professor of Electrical and Computer Engineering, Associate Dean for Research in the College of Engineering, and Director of the Engineering Research Accelerator at Carnegie Mellon University. He received his Dipl.-Ing. (M.Sc.) in Technical Mathematics and Dr. techn. (Ph.D.) in Computational Mathematics from the Vienna University of Technology in 2000 and 2003, respectively. Prof. Franchetti's research focuses on automatic performance tuning and program generation for emerging parallel platforms and algorithm/hardware co-synthesis. Within the SPIRAL effort, his research goal is to enable automatic generation of highly optimized software libraries for important kernel functionality.
                     </div>
                 </div>
             </div>
-            
-            <div class="organizer-card">
-                <div class="avatar">NZ</div>
-                <div class="organizer-info">
-                    <h3><a href="https://naifeng.github.io/" target="_blank">Naifeng Zhang</a></h3>
-                    <div class="role-tags">
-                        <span class="role-tag tag-organizer">Organizer</span>
-                        <span class="role-tag tag-speaker">Speaker</span>
-                    </div>
-                    <span class="organizer-affil">Carnegie Mellon University</span>
-                    <div class="organizer-bio">
-                        Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on high-performance code generation, programming languages, compilers, and algorithms. His work has earned multiple awards at conferences such as CGO and PACT.
-                    </div>
-                </div>
-            </div>
 
-            <div class="organizer-card">
+            <!-- <div class="organizer-card">
                 <div class="avatar">S1</div>
                 <div class="organizer-info">
                     <h3>Invited Speaker I</h3>
@@ -393,7 +390,7 @@
                         To be announced.
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 
