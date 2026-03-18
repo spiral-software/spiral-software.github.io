@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial on SPIRAL: Pre-Silicon and Early-Prototype Performance Estimation</title>
+    <title>SPIRAL Tutorial @ ASPLOS '26</title>
     <style>
         /* CSS Variables for easy theming */
         :root {
@@ -102,6 +102,18 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Blockquote Styling */
+        blockquote {
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            background-color: var(--section-bg);
+            border-left: 4px solid var(--primary-color);
+            font-style: italic;
+            color: #444;
+            font-size: 1rem;
+            border-radius: 0 6px 6px 0;
+        }
+
         /* Schedule Table */
         table {
             width: 100%;
@@ -119,6 +131,22 @@
         th {
             background-color: #f5f5f5;
             font-weight: 600;
+            text-align: center;
+        }
+
+        /* Center align the first (Time) and last (Resources) columns */
+        td:first-child, td:last-child {
+            text-align: center;
+        }
+        
+        /* Zebra striping for table rows */
+        tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        
+        /* Subtle styling for break rows to create visual separation */
+        .break-row td {
+            color: #888;
         }
         
         /* Adjusted Organizer Layout for Bios */
@@ -135,6 +163,7 @@
             align-items: flex-start;
             padding-bottom: 2rem;
             border-bottom: 1px solid #eee;
+            cursor: pointer; /* Added so the whole card feels interactive */
         }
 
         .organizer-card:last-child {
@@ -146,20 +175,12 @@
             height: 100px;
             border-radius: 50%;
             flex-shrink: 0;
-            
-            /* Ensures images don't stretch */
             object-fit: cover; 
-            
-            /* Typography for fallback/initials if needed */
             font-size: 2rem; 
             font-weight: 500; 
             color: white;
             text-transform: uppercase;
-            
-            /* Flat Professional Lighter Gray background (visible if image fails) */
             background-color: #9ca3af;
-            
-            /* No Border or Shadow for 2D look */
             border: none;
             box-shadow: none;
         }
@@ -171,58 +192,99 @@
 
         .organizer-info h3 {
             margin-top: 0;
-            margin-bottom: 0.4rem;
-            font-size: 1.4rem;
+            margin-bottom: 0.2rem;
+            font-size: 1.35rem;
             line-height: 1.2;
-        }
-
-        /* Professional "Pill" Tags */
-        .role-tags {
-            display: flex;
-            flex-direction: row;
-            gap: 0.5rem;
-            margin-bottom: 0.6rem;
-            align-items: center;
-        }
-
-        .role-tag {
-            font-size: 0.65rem;
-            padding: 0.3em 0.8em;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1;
-            /* Flex center to ensure text aligns perfectly */
-            display: inline-flex;
-            align-items: center;
-        }
-
-        /* Modern "Soft Tint" Styles */
-        .tag-organizer {
-            background-color: #eff6ff; /* Soft Blue Background */
-            color: #1e40af;            /* Deep Blue Text */
-            border: 1px solid #bfdbfe; /* Subtle Blue Border */
-        }
-
-        .tag-speaker {
-            background-color: #faf5ff; /* Soft Purple Background */
-            color: #6b21a8;            /* Deep Purple Text */
-            border: 1px solid #e9d5ff; /* Subtle Purple Border */
+            font-weight: 600; /* Softens the default harsh bold */
         }
 
         .organizer-affil {
-            font-weight: 500;
-            color: #666;
-            margin-bottom: 0.8rem;
+            font-weight: 400; /* Editorial, elegant reading weight */
+            color: #444;      /* Slightly darker for crisp readability */
             display: block;
-            font-size: 0.95rem;
+            font-size: 1rem;  /* Base reading size */
+        }
+
+        /* --- Elegant Bio Hover Expand Animation --- */
+        .bio-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.4s ease-out;
         }
 
         .organizer-bio {
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .organizer-bio-content {
+            padding-top: 0.8rem;
             font-size: 0.95rem;
             color: #444;
             line-height: 1.6;
+        }
+
+        /* Reveal on Hover */
+        .organizer-card:hover .bio-wrapper {
+            grid-template-rows: 1fr;
+        }
+
+        .organizer-card:hover .organizer-bio {
+            opacity: 1;
+            transition: opacity 0.5s ease-out 0.1s; /* Slight delay to let it slide down gracefully */
+        }
+
+        /* Visual "Read Bio" Hint */
+        .bio-toggle {
+            font-size: 0.9rem; /* Slightly smaller to act as a distinct secondary control */
+            color: #666; 
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 500; /* Medium weight to signify clickability */
+            transition: color 0.3s ease;
+        }
+
+        .bio-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.4s ease-out;
+        }
+
+        .organizer-card:hover .bio-toggle {
+            color: var(--primary-color);
+        }
+
+        .organizer-card:hover .bio-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        /* Resource Links & Icons */
+        .resource-row {
+            display: inline-grid; /* Changed to inline-grid so it centers perfectly in the column */
+            grid-template-columns: 105px max-content; /* Locks text width, icon drops right next to it */
+            align-items: center;
+            gap: 0.5rem; /* Increased from 0.25rem for a slightly wider gap */
+            text-align: left; /* Keeps text left-aligned inside the centered block */
+        }
+
+        .resource-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .github-icon {
+            color: var(--link-color);
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .github-icon:hover {
+            color: #004499; /* Darker blue on hover */
         }
 
         /* Footer */
@@ -241,6 +303,11 @@
             .container { padding: 1rem; }
             th, td { padding: 0.5rem; font-size: 0.9rem; }
             .organizer-card { flex-direction: column; align-items: center; text-align: center; }
+            
+            /* Disable hover effects on mobile, show bio fully */
+            .bio-wrapper { grid-template-rows: 1fr; }
+            .organizer-bio { opacity: 1; overflow: visible; }
+            .bio-toggle { display: none; }
         }
     </style>
 </head>
@@ -249,81 +316,125 @@
 <div class="container">
     <header>
         <h1>SPIRAL Tutorial @ <a href="https://www.asplos-conference.org/asplos2026/" target="_blank">ASPLOS '26</a></h1>
-        <div class="subtitle">Pre-Silicon and Early-Prototype Performance Estimation Using Highly Optimized Code</div>
+        <div class="subtitle">A Code Generation Approach to Hardware-Software Co-Design</div>
     </header>
 
     <section id="overview">
         <h2>Overview</h2>
-        <p>Emerging applications, from AI and cryptography to scientific computing, are driving a rapid proliferation of new architectures, ranging from lightweight CPU ISA extensions to fully customized accelerators. However, evaluating a new ISA or accelerator remains notoriously difficult, time-consuming, and costly: evaluators must hand-optimize application kernels for hardware whose architecture and toolchain are still evolving, often in the absence of a mature compiler, operating system, or performance analysis framework.</p>
+        <p>Critical applications, from AI and cryptography to scientific computing, are driving the rapid proliferation of specialized hardware designs. While this trend underscores the growing importance of specialization, it also raises fundamental questions:</p>
         
-        <p>This tutorial introduces a systematic methodology for pre-silicon and early-prototype performance estimation that enables informed stop-or-go decisions long before complete hardware or software stacks exist. We begin with <a href="https://www.spiral.net/" target="_blank">SPIRAL</a>, a code generation system developed over 25 years through academic, industrial, and government collaborations, which automatically produces highly optimized code for emerging architectures.</p>
+        <blockquote>
+            When is specialized hardware truly necessary, and if so, how should we efficiently explore the design space?
+        </blockquote>
+        
+        <p>This tutorial presents a principled approach to hardware-software co-design based on automatic code generation. We demonstrate how generating highly optimized implementations across diverse architectures enables informed stop-or-go decisions in hardware design.</p>
             
-        <p>We then demonstrate how to enable hardware-software co-design at the earliest stage by defining a fixed C-level function API as a stable interface between the two. Once this API is defined, SPIRAL can automatically target it and generate optimized, non-trivial kernels for benchmarking and performance evaluation. To close the loop, we introduce performance projection with proxy ISA (PISA), a fast and accurate performance estimation technique that predicts runtime performance without requiring an implemented microarchitectural model. By the end of the tutorial, attendees will understand how to use SPIRAL for early-stage performance evaluation and hands-on kernel generation for novel hardware prototypes.</p> 
+        <p>We use <a href="https://www.spiral.net/" target="_blank">SPIRAL</a>, a code generator that has been developed over 25 years and known for generating highly optimized code for a diverse range of architectures, as a central case study (Session I). The tutorial is structured around three key questions that arise throughout the co-design cycle. First, given an application domain, when do we truly need specialized hardware? (Session II). Second, do we need a full custom accelerator, or would lightweight ISA extensions suffice? (Session III). Third, if new hardware is required, how can we design and program it efficiently? (Session IV). The tutorial concludes with invited talks highlighting recent advances in compiler design for emerging architectures and their role in hardware–software co-design.</p> 
+        
+        <p>By the end of the session, attendees will gain a practical understanding of how to leverage systems such as SPIRAL to navigate hardware-software co-design and guide specialization decisions in their own domains.</p>
     </section>
 
     <div class="logistics">
-        <p><strong>📅 When:</strong> March 23, 2026, Morning Session </p>
-        <p><strong>📍 Where:</strong> <a href="https://www.asplos-conference.org/asplos2026/conference-venue/" target="_blank">The Landing Hotel</a>, Room TBD</p>
+        <p><strong>📅 When:</strong> March 23, 2026, 8 AM - 12 PM</p>
+        <p><strong>📍 Where:</strong> <a href="https://www.asplos-conference.org/asplos2026/conference-venue/" target="_blank">The Landing Hotel</a>, Room Monogahela</p>
     </div>
 
     <section id="schedule">
-        <h2>Tentative Schedule</h2>
+        <h2>Schedule</h2>
         <table>
             <thead>
                 <tr>
-                    <th style="width: 15%">Duration</th>
+                    <th style="width: 15%">Time</th>
                     <th style="width: 60%">Topic</th>
                     <th style="width: 25%">Resources</th>
                 </tr>
             </thead>
             <tbody>
+                <tr class="break-row">
+                    <td>8:00</td>
+                    <td>Welcome & Networking 💬</td>
+                    <td></td>
+                </tr>
                 <tr>
-                    <td>10 mins</td>
+                    <td>8:30</td>
                     <td>Opening Remarks</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>40 mins</td>
-                    <td>Session 1: Introduction to SPIRAL and Code Generation</td>
+                    <td>8:40</td>
+                    <td>Session I: <i>Introduction to SPIRAL and Code Generation</i></td>
                     <td>
-                        <a href="https://www.spiral.net/doc/papers/08510983_Spiral_IEEE_Final.pdf" target="_blank">Proc. IEEE '18</a><br>
-                        <a href="https://www.spiral.net/doc/papers/IEEE_2005.pdf" target="_blank">Proc. IEEE '05</a>
+                        <div class="resource-row">
+                            <div class="resource-text">
+                                <a href="https://www.spiral.net/doc/papers/08510983_Spiral_IEEE_Final.pdf" target="_blank">Proc. IEEE '18</a>
+                                <a href="https://www.spiral.net/doc/papers/IEEE_2005.pdf" target="_blank">Proc. IEEE '05</a>
+                            </div>
+                            <a href="https://github.com/spiral-software/spiral-software" target="_blank" class="github-icon" title="View Code on GitHub">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>40 mins</td>
-                    <td>Session 2: Targeting New Architectures with Optimized Code</td>
+                    <td>9:10</td>
+                    <td>Session II: <i>When Do We Truly Need Specialized Hardware?</i></td>
                     <td>
-                        <!-- <a href="#">Slides</a><br> -->
-                        <a href="https://naifeng.github.io/assets/pdf/CGO_2025_MoMA.pdf" target="_blank">CGO '25</a>
+                        <div class="resource-row">
+                            <div class="resource-text">
+                                <a href="https://naifeng.github.io/assets/pdf/CGO_2025_MoMA.pdf" target="_blank">CGO '25</a>
+                            </div>
+                            <a href="https://github.com/Naifeng/moma" target="_blank" class="github-icon" title="View Code on GitHub">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>30 mins</td>
+                    <td>9:35</td>
+                    <td>Session III: <i>Do We Need Specialized Hardware, or Just a Few More Instructions?</i></td>
+                    <td>
+                        <div class="resource-row">
+                            <div class="resource-text">
+                                <a href="https://naifeng.github.io/assets/pdf/MICRO_2025_MQX.pdf" target="_blank">MICRO '25</a>
+                            </div>
+                            <a href="https://github.com/Naifeng/benchntt" target="_blank" class="github-icon" title="View Code on GitHub">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="break-row">
+                    <td>10:00</td>
                     <td>Coffee Break ☕</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>40 mins</td>
-                    <td>Session 3: Pre-Silicon Performance Modeling and Evaluation</td>
+                    <td>10:30</td>
+                    <td>Session IV: <i>How to Efficiently Design and Program Specialized Hardware?</i></td>
                     <td>
-                        <!-- <a href="#">Slides</a><br> -->
-                        <a href="https://naifeng.github.io/assets/pdf/MICRO_2025_MQX.pdf" target="_blank">MICRO '25</a>
                     </td>
                 </tr>
                 <tr>
-                    <td>20 mins</td>
-                    <td>Invited Talk I</td>
+                    <td>10:55</td>
+                    <td>Invited Talk by Charith Mendis<br><i>Making Compilers More Evolvable With Learned Cost Models</i></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>20 mins</td>
-                    <td>Invited Talk II</td>
-                    <td></td>
+                    <td>11:20</td>
+                    <td>Invited Talk by Brandon Reagen<br><i>HAAC: A Hardware-Software Co-Design for Data Oblivious Processing</i></td>
+                    <td>
+                        <a href="https://arxiv.org/pdf/2211.13324" target="_blank">ISCA '23</a>
+                    </td>
                 </tr>
                  <tr>
-                    <td>10 mins</td>
-                    <td>Closing Remarks</td>
+                    <td>11:45</td>
+                    <td>Open Discussion & Closing Remarks</td>
                     <td></td>
                 </tr>
             </tbody>
@@ -338,13 +449,18 @@
                 <img src="images/naifeng.jpg" alt="Naifeng Zhang" class="avatar">
                 <div class="organizer-info">
                     <h3><a href="https://naifeng.github.io/" target="_blank">Naifeng Zhang</a></h3>
-                    <!-- <div class="role-tags">
-                        <span class="role-tag tag-organizer">Organizer</span>
-                        <span class="role-tag tag-speaker">Speaker</span>
-                    </div> -->
-                    <span class="organizer-affil">Carnegie Mellon University</span>
-                    <div class="organizer-bio">
-                        Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on code generation, compilers, and programming languages. His work has earned awards at conferences such as CGO and PACT.
+                    <span class="organizer-affil">Ph.D. Candidate at Carnegie Mellon University</span>
+                    
+                    <div class="bio-toggle">
+                        Full bio <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+
+                    <div class="bio-wrapper">
+                        <div class="organizer-bio">
+                            <div class="organizer-bio-content">
+                                Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on code generation, compilers, and programming languages. His work has earned awards at conferences such as CGO and PACT.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -353,44 +469,68 @@
                 <img src="images/franz.png" alt="Franz Franchetti" class="avatar">
                 <div class="organizer-info">
                     <h3><a href="https://users.ece.cmu.edu/~franzf/" target="_blank">Franz Franchetti</a></h3>
-                    <!-- <div class="role-tags">
-                        <span class="role-tag tag-organizer">Organizer</span>
-                        <span class="role-tag tag-speaker">Speaker</span>
-                    </div> -->
-                    <span class="organizer-affil">Carnegie Mellon University</span>
-                    <div class="organizer-bio">
-                        Franz Franchetti is the Kavčić-Moura Professor of Electrical and Computer Engineering, Associate Dean for Research in the College of Engineering, and Director of the Engineering Research Accelerator at Carnegie Mellon University. He received his Dipl.-Ing. (M.Sc.) in Technical Mathematics and Dr. techn. (Ph.D.) in Computational Mathematics from the Vienna University of Technology in 2000 and 2003, respectively. Prof. Franchetti's research focuses on automatic performance tuning and program generation for emerging parallel platforms and algorithm/hardware co-synthesis. Within the SPIRAL effort, his research goal is to enable automatic generation of highly optimized software libraries for important kernel functionality.
+                    <span class="organizer-affil">Kavčić-Moura Professor at Carnegie Mellon University</span>
+                    
+                    <div class="bio-toggle">
+                        Full bio <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
-                </div>
-            </div>
 
-            <!-- <div class="organizer-card">
-                <div class="avatar">S1</div>
-                <div class="organizer-info">
-                    <h3>Invited Speaker I</h3>
-                    <div class="role-tags">
-                        <span class="role-tag tag-speaker">Speaker</span>
-                    </div>
-                    <span class="organizer-affil">Affiliation</span>
-                    <div class="organizer-bio">
-                        To be announced.
+                    <div class="bio-wrapper">
+                        <div class="organizer-bio">
+                            <div class="organizer-bio-content">
+                                Franz Franchetti is the Kavčić-Moura Professor of Electrical and Computer Engineering, Associate Dean for Research in the College of Engineering, and Director of the Engineering Research Accelerator at Carnegie Mellon University. He received his Dipl.-Ing. (M.Sc.) in Technical Mathematics and Dr. techn. (Ph.D.) in Computational Mathematics from the Vienna University of Technology in 2000 and 2003, respectively. Prof. Franchetti's research focuses on automatic performance tuning and program generation for emerging parallel platforms and algorithm/hardware co-synthesis. Within the SPIRAL effort, his research goal is to enable automatic generation of highly optimized software libraries for important kernel functionality.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="invited-speakers">
+        <h2>Invited Speakers</h2>
+        <div class="organizers-list">
 
             <div class="organizer-card">
-                <div class="avatar">S2</div>
+                <img src="images/charith.jpg" alt="Charith Mendis" class="avatar">
                 <div class="organizer-info">
-                    <h3>Invited Speaker II</h3>
-                    <div class="role-tags">
-                        <span class="role-tag tag-speaker">Speaker</span>
+                    <h3><a href="https://charithmendis.com/" target="_blank">Charith Mendis</a></h3>
+                    <span class="organizer-affil">Assistant Professor at University of Illinois Urbana-Champaign</span>
+
+                    <div class="bio-toggle">
+                        Full bio <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
-                    <span class="organizer-affil">Affiliation</span>
-                    <div class="organizer-bio">
-                        To be announced.
+
+                    <div class="bio-wrapper">
+                        <div class="organizer-bio">
+                            <div class="organizer-bio-content">
+                                Charith Mendis is an Assistant Professor in the Siebel School of Computing and Data Science at the University of Illinois at Urbana-Champaign. His broad research interests are at the intersection of compilers, programming languages, and machine learning. He received his Ph.D. and Master’s from the Massachusetts Institute of Technology and his B.Sc. from the University of Moratuwa. He is the recipient of the DARPA Young Faculty Award, the NSF CAREER Award, the Google ML and Systems Junior Faculty Award, the Outstanding Advisor award at UIUC, the William A. Martin Outstanding Master’s Thesis Award at MIT, and the University Gold Medal for his B.Sc. He has won numerous paper awards, including a Distinguished Paper Award at POPL, a Best Student Paper Award at the IEEE BigData conference, an honorable mention for the Best Artifact Award at SIGMOD, a Best Paper Award at ML for Systems workshop at ISCA, and an IEEE Top Picks Honorable Mention.
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            
+            <div class="organizer-card">
+                <img src="images/brandon.jpg" alt="Brandon Reagen" class="avatar">
+                <div class="organizer-info">
+                    <h3><a href="https://brandonreagen.com/" target="_blank">Brandon Reagen</a></h3>
+                    <span class="organizer-affil">Assistant Professor at New York University</span>
+
+                    <div class="bio-toggle">
+                        Full bio <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+
+                    <div class="bio-wrapper">
+                        <div class="organizer-bio">
+                            <div class="organizer-bio-content">
+                                Brandon Reagen is an assistant professor of Electrical and Computer Engineering at New York University with a focus on computer architecture. He leads a group of 8 PhD students whose current focus is to make cryptographic computing practical through algorithmic, compiler, and hardware optimizations for homomorphic encryption, zero-knowledge proofs, and secure multi-party computation. Prior to cryptographic computing, he made significant contributions to accelerator design and hardware for machine learning. The work has been recognized with the ASPLOS’25 Best Paper Award, and multiple best paper nominations (DAC, PACT, HASP), and multiple Top Pick/honorable mention awards. He has further implemented many ideas, participating in multiple chip tape outs. He has several awards and recognitions including DARPA Riser and winning the NSF CAREER award. He is also now lead PI on the NSF CIRC Grand Cryptolets project and has generously received support from NSF, DARPA, Google, DTCC, and AMD.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
