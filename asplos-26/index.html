@@ -139,14 +139,29 @@
             text-align: center;
         }
         
-        /* Zebra striping for table rows */
-        tbody tr:nth-child(even) {
+        /* Zebra striping for table rows (Applied explicitly via class to safely skip hidden drawers) */
+        .stripe-row {
             background-color: #fafafa;
         }
         
         /* Subtle styling for break rows to create visual separation */
         .break-row td {
             color: #888;
+        }
+
+        /* Drawer styling for full-width code blocks */
+        .has-drawer td {
+            border-bottom: none !important; /* Remove border so drawer attaches seamlessly */
+        }
+
+        .drawer-row td {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            border-top: none;
+        }
+
+        .drawer-row td:last-child {
+            text-align: left; /* Reset text alignment for the expanded drawer cell */
         }
         
         /* Adjusted Organizer Layout for Bios */
@@ -163,7 +178,7 @@
             align-items: flex-start;
             padding-bottom: 2rem;
             border-bottom: 1px solid #eee;
-            cursor: pointer; /* Added so the whole card feels interactive */
+            cursor: pointer;
         }
 
         .organizer-card:last-child {
@@ -185,7 +200,6 @@
             box-shadow: none;
         }
         
-        /* Wrapper for text info to handle flex growth */
         .organizer-info {
             flex-grow: 1;
         }
@@ -195,17 +209,17 @@
             margin-bottom: 0.2rem;
             font-size: 1.35rem;
             line-height: 1.2;
-            font-weight: 600; /* Softens the default harsh bold */
+            font-weight: 600;
         }
 
         .organizer-affil {
-            font-weight: 400; /* Editorial, elegant reading weight */
-            color: #444;      /* Slightly darker for crisp readability */
+            font-weight: 400;
+            color: #444;
             display: block;
-            font-size: 1rem;  /* Base reading size */
+            font-size: 1rem;
         }
 
-        /* --- Elegant Bio Hover Expand Animation --- */
+        /* Elegant Bio Hover Expand Animation */
         .bio-wrapper {
             display: grid;
             grid-template-rows: 0fr;
@@ -225,25 +239,23 @@
             line-height: 1.6;
         }
 
-        /* Reveal on Hover */
         .organizer-card:hover .bio-wrapper {
             grid-template-rows: 1fr;
         }
 
         .organizer-card:hover .organizer-bio {
             opacity: 1;
-            transition: opacity 0.5s ease-out 0.1s; /* Slight delay to let it slide down gracefully */
+            transition: opacity 0.5s ease-out 0.1s;
         }
 
-        /* Visual "Read Bio" Hint */
         .bio-toggle {
-            font-size: 0.9rem; /* Slightly smaller to act as a distinct secondary control */
+            font-size: 0.9rem;
             color: #666; 
             margin-top: 0.5rem;
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            font-weight: 500; /* Medium weight to signify clickability */
+            font-weight: 500;
             transition: color 0.3s ease;
         }
 
@@ -263,11 +275,11 @@
 
         /* Resource Links & Icons */
         .resource-row {
-            display: inline-grid; /* Changed to inline-grid so it centers perfectly in the column */
-            grid-template-columns: 105px max-content; /* Locks text width, icon drops right next to it */
+            display: inline-grid;
+            grid-template-columns: 105px max-content;
             align-items: center;
-            gap: 0.5rem; /* Increased from 0.25rem for a slightly wider gap */
-            text-align: left; /* Keeps text left-aligned inside the centered block */
+            gap: 0.5rem;
+            text-align: left;
         }
 
         .resource-text {
@@ -284,7 +296,69 @@
         }
 
         .github-icon:hover {
-            color: #004499; /* Darker blue on hover */
+            color: #004499;
+        }
+
+        /* Terminal Icon & Expanding Code Block */
+        .terminal-icon {
+            color: var(--link-color);
+            display: inline-flex;
+            align-items: center;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .terminal-icon:hover {
+            color: #004499;
+        }
+
+        .code-snippet-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-out;
+            width: 100%;
+        }
+
+        .code-snippet-wrapper.expanded {
+            grid-template-rows: 1fr;
+        }
+
+        .code-snippet-inner {
+            overflow: hidden;
+            padding-top: 0;
+            padding-bottom: 0;
+            transition: padding 0.3s ease-out;
+        }
+
+        .code-snippet-wrapper.expanded .code-snippet-inner {
+            padding-top: 0.5rem;
+            padding-bottom: 1.5rem; /* Space before the next table row */
+        }
+
+        .code-block {
+            background-color: #0d1117; /* Sleek, modern dark background */
+            color: #c9d1d9; /* Crisp light gray text */
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            text-align: left;
+            border: 1px solid #30363d; /* Subtle dark border */
+            display: block; /* Takes full width of the cell */
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        }
+
+        .code-block .prompt {
+            color: #58a6ff; /* A bright, sleek blue that ties into the link colors but pops on dark backgrounds */
+            font-weight: 600;
+            margin-right: 0.5rem;
+            user-select: none;
         }
 
         /* Footer */
@@ -355,12 +429,12 @@
                     <td>Welcome & Networking 💬</td>
                     <td></td>
                 </tr>
-                <tr>
+                <tr class="stripe-row">
                     <td>8:30</td>
                     <td>Opening Remarks</td>
                     <td></td>
                 </tr>
-                <tr>
+                <tr class="has-drawer">
                     <td>8:40</td>
                     <td>Session I: <i>Introduction to SPIRAL and Code Generation</i></td>
                     <td>
@@ -369,15 +443,43 @@
                                 <a href="https://www.spiral.net/doc/papers/08510983_Spiral_IEEE_Final.pdf" target="_blank">Proc. IEEE '18</a>
                                 <a href="https://www.spiral.net/doc/papers/IEEE_2005.pdf" target="_blank">Proc. IEEE '05</a>
                             </div>
-                            <a href="https://github.com/spiral-software/spiral-software" target="_blank" class="github-icon" title="View Code on GitHub">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                            </a>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="https://github.com/spiral-software/spiral-software" target="_blank" class="github-icon" title="View Code on GitHub">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                                <button class="terminal-icon" onclick="toggleTerminal('session1-term')" title="View Commands">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="4 17 10 11 4 5"></polyline>
+                                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
-                <tr>
+
+                <!-- Seamless full-width code drawer row for Session I -->
+                <tr class="drawer-row">
+                    <td></td> <!-- Empty cell to align with Time column -->
+                    <td colspan="2"> <!-- Spans across Topic and Resources columns -->
+                        <div id="session1-term" class="code-snippet-wrapper">
+                            <div class="code-snippet-inner">
+                                <div class="code-block">
+                                    <div><span class="prompt">$</span>./spiral</div>
+                                    <div><span class="prompt">spiral></span>opts := SpiralDefaults;</div>
+                                    <div><span class="prompt">spiral></span>transform := DFT(4);</div>
+                                    <div><span class="prompt">spiral></span>ruletree := RandomRuleTree(transform, opts);</div>
+                                    <div><span class="prompt">spiral></span>icode := CodeRuleTree(ruletree, opts);</div>
+                                    <div><span class="prompt">spiral></span>PrintCode("DFT4", icode, opts);</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="stripe-row has-drawer">
                     <td>9:10</td>
                     <td>Session II: <i>When Do We Truly Need Specialized Hardware?</i></td>
                     <td>
@@ -385,15 +487,39 @@
                             <div class="resource-text">
                                 <a href="https://naifeng.github.io/assets/pdf/CGO_2025_MoMA.pdf" target="_blank">CGO '25</a>
                             </div>
-                            <a href="https://github.com/Naifeng/moma" target="_blank" class="github-icon" title="View Code on GitHub">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                            </a>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="https://github.com/Naifeng/moma" target="_blank" class="github-icon" title="View Code on GitHub">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                                <button class="terminal-icon" onclick="toggleTerminal('session2-term')" title="View Commands">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="4 17 10 11 4 5"></polyline>
+                                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
-                <tr>
+
+                <!-- Seamless full-width code drawer row for Session II -->
+                <tr class="drawer-row stripe-row">
+                    <td></td> <!-- Empty cell to align with Time column -->
+                    <td colspan="2"> <!-- Spans across Topic and Resources columns -->
+                        <div id="session2-term" class="code-snippet-wrapper">
+                            <div class="code-snippet-inner">
+                                <div class="code-block">
+                                    <div style="color: #8b949e; margin-bottom: 0.2rem;"># Requires spiral-software/bin in $PATH</div>
+                                    <div><span class="prompt">$</span>spiral &lt; examples/mp-cuda-batch.g</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="has-drawer">
                     <td>9:35</td>
                     <td>Session III: <i>Do We Need Specialized Hardware, or Just a Few More Instructions?</i></td>
                     <td>
@@ -401,15 +527,39 @@
                             <div class="resource-text">
                                 <a href="https://naifeng.github.io/assets/pdf/MICRO_2025_MQX.pdf" target="_blank">MICRO '25</a>
                             </div>
-                            <a href="https://github.com/Naifeng/benchntt" target="_blank" class="github-icon" title="View Code on GitHub">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                </svg>
-                            </a>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <a href="https://github.com/Naifeng/benchntt" target="_blank" class="github-icon" title="View Code on GitHub">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                                <button class="terminal-icon" onclick="toggleTerminal('session3-term')" title="View Commands">
+                                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="4 17 10 11 4 5"></polyline>
+                                        <line x1="12" y1="19" x2="20" y2="19"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </td>
                 </tr>
-                <tr class="break-row">
+                
+                <!-- Seamless full-width code drawer row -->
+                <tr class="drawer-row">
+                    <td></td> <!-- Empty cell to align with Time column -->
+                    <td colspan="2"> <!-- Spans across Topic and Resources columns -->
+                        <div id="session3-term" class="code-snippet-wrapper">
+                            <div class="code-snippet-inner">
+                                <div class="code-block">
+                                    <div><span class="prompt">$</span>make blas</div>
+                                    <div><span class="prompt">$</span>make ntt</div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="break-row stripe-row">
                     <td>10:00</td>
                     <td>Coffee Break ☕</td>
                     <td></td>
@@ -420,7 +570,7 @@
                     <td>
                     </td>
                 </tr>
-                <tr>
+                <tr class="stripe-row">
                     <td>10:55</td>
                     <td>Invited Talk by Charith Mendis<br><i>Making Compilers More Evolvable With Learned Cost Models</i></td>
                     <td></td>
@@ -432,7 +582,7 @@
                         <a href="https://arxiv.org/pdf/2211.13324" target="_blank">ISCA '23</a>
                     </td>
                 </tr>
-                 <tr>
+                 <tr class="stripe-row">
                     <td>11:45</td>
                     <td>Open Discussion & Closing Remarks</td>
                     <td></td>
@@ -458,7 +608,7 @@
                     <div class="bio-wrapper">
                         <div class="organizer-bio">
                             <div class="organizer-bio-content">
-                                Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on code generation, compilers, and programming languages. His work has earned awards at conferences such as CGO and PACT.
+                                Naifeng Zhang is a fifth-year Ph.D. candidate in Electrical and Computer Engineering at Carnegie Mellon University, advised by Professor Franz Franchetti. His research focuses on code generation, compilers, and programming languages, and has been recognized with awards at CGO and PACT.
                             </div>
                         </div>
                     </div>
@@ -538,6 +688,14 @@
         <p>SPIRAL Tutorial @ ASPLOS '26.</p>
     </footer>
 </div>
+
+<!-- Tiny script to handle the terminal drawer toggle -->
+<script>
+    function toggleTerminal(id) {
+        const el = document.getElementById(id);
+        el.classList.toggle('expanded');
+    }
+</script>
 
 </body>
 </html>
