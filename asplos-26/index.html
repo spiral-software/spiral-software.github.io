@@ -149,6 +149,39 @@
             color: #888;
         }
 
+        /* Topic & Speaker Formatting */
+        .topic-meta {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 0.15rem;
+        }
+
+        .topic-label {
+            font-weight: 600;
+            width: 92px; /* Reduced from 105px to bring speakers much closer! */
+            flex-shrink: 0;
+            color: #111;
+            white-space: nowrap; /* Prevents slightly longer labels like "Invited Talk" from wrapping */
+        }
+
+        .topic-speaker {
+            color: #666;
+            font-size: 0.85rem; /* Made smaller for better contrast with the label */
+        }
+
+        .topic-speaker::before {
+            content: ""; 
+            margin-right: 0.4rem;
+            color: #ccc;
+            font-weight: bold;
+        }
+
+        .topic-title {
+            font-style: italic;
+            color: #333;
+            line-height: 1.4;
+        }
+
         /* Drawer styling for full-width code blocks */
         .has-drawer td {
             border-bottom: none !important; /* Remove border so drawer attaches seamlessly */
@@ -355,7 +388,7 @@
         }
 
         .code-block .prompt {
-            color: #58a6ff; /* A bright, sleek blue that ties into the link colors but pops on dark backgrounds */
+            color: #ff4d4d; /* Vibrant, punchy crimson red */
             font-weight: 600;
             margin-right: 0.5rem;
             user-select: none;
@@ -382,6 +415,12 @@
             .bio-wrapper { grid-template-rows: 1fr; }
             .organizer-bio { opacity: 1; overflow: visible; }
             .bio-toggle { display: none; }
+
+            /* Adjust topic meta for small screens so it wraps cleanly */
+            .topic-meta { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+            .topic-label { width: auto; }
+            .topic-speaker::before { display: none; }
+            .topic-speaker { font-size: 0.8rem; color: #777; }
         }
     </style>
 </head>
@@ -436,7 +475,13 @@
                 </tr>
                 <tr class="has-drawer">
                     <td>8:40</td>
-                    <td>Session I: <i>Introduction to SPIRAL and Code Generation</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Session I</span>
+                            <span class="topic-speaker">Naifeng Zhang (on behalf of Franz Franchetti)</span>
+                        </div>
+                        <div class="topic-title">Introduction to SPIRAL and Code Generation</div>
+                    </td>
                     <td>
                         <div class="resource-row">
                             <div class="resource-text">
@@ -481,7 +526,13 @@
 
                 <tr class="stripe-row has-drawer">
                     <td>9:10</td>
-                    <td>Session II: <i>When Do We Truly Need Specialized Hardware?</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Session II</span>
+                            <span class="topic-speaker">Naifeng Zhang</span>
+                        </div>
+                        <div class="topic-title">When Do We Truly Need Specialized Hardware?</div>
+                    </td>
                     <td>
                         <div class="resource-row">
                             <div class="resource-text">
@@ -521,7 +572,13 @@
 
                 <tr class="has-drawer">
                     <td>9:35</td>
-                    <td>Session III: <i>Do We Need Specialized Hardware, or Just a Few More Instructions?</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Session III</span>
+                            <span class="topic-speaker">Naifeng Zhang</span>
+                        </div>
+                        <div class="topic-title">Do We Need Specialized Hardware, or Just a Few More Instructions?</div>
+                    </td>
                     <td>
                         <div class="resource-row">
                             <div class="resource-text">
@@ -566,18 +623,36 @@
                 </tr>
                 <tr>
                     <td>10:30</td>
-                    <td>Session IV: <i>How to Efficiently Design and Program Specialized Hardware?</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Session IV</span>
+                            <span class="topic-speaker">Larry Tang</span>
+                        </div>
+                        <div class="topic-title">How to Efficiently Design and Program Specialized Hardware?</div>
+                    </td>
                     <td>
                     </td>
                 </tr>
                 <tr class="stripe-row">
                     <td>10:55</td>
-                    <td>Invited Talk by Charith Mendis<br><i>Making Compilers More Evolvable With Learned Cost Models</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Invited Talk</span>
+                            <span class="topic-speaker">Charith Mendis</span>
+                        </div>
+                        <div class="topic-title">Making Compilers More Evolvable With Learned Cost Models</div>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>11:20</td>
-                    <td>Invited Talk by Brandon Reagen<br><i>HAAC: A Hardware-Software Co-Design for Data Oblivious Processing</i></td>
+                    <td>
+                        <div class="topic-meta">
+                            <span class="topic-label">Invited Talk</span>
+                            <span class="topic-speaker">Brandon Reagen</span>
+                        </div>
+                        <div class="topic-title">HAAC: A Hardware-Software Co-Design for Data Oblivious Processing</div>
+                    </td>
                     <td>
                         <a href="https://arxiv.org/pdf/2211.13324" target="_blank">ISCA '23</a>
                     </td>
